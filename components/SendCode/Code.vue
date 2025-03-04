@@ -7,7 +7,7 @@
 
 
           <div class="flex flex-col gap-[16px]">
-            <input v-model="formData.subject" class="bg-[#F6F6F6] rounded-[8px] p-[16px]" type="text" placeholder="Телефон или почта">
+            <input v-model="formData.subject" @input="console.log(formData.subject)" class="bg-[#F6F6F6] rounded-[8px] p-[16px]" type="text" placeholder="Телефон или почта">
           </div>
 
 
@@ -44,12 +44,21 @@ const router = useRouter()
 //  Форма
 const formData = ref({
   subject: '',
-  type: 'email',
+  type: 'phone',
   rule: 'dont_exist'
 })
 
 // Если запрос не прошел
 const errorMessage = ref('')
+
+
+
+
+console.log('Данные запроса1:', {
+  rule: formData.value.rule,
+  type: formData.value.type,
+  subject: formData.value.subject
+})
 
 //  тправка запроса
 const sendCode = async () => {
@@ -60,11 +69,16 @@ const sendCode = async () => {
       subject: formData.value.subject
     },)
 
-    console.log('Ответ сервера:', response.data)
-    router.push('/')
+    console.log('ответ :', response.data)
+    const subject = response.data.data.code.confirmation_subject
+    const code = response.data.data.code.code
+    router.push({ path: '/confirmCode', query: { subject: subject, code: code } })
+
   } catch (error) {
     console.error('Ошибка авторизации:', error)
     errorMessage.value = error.response?.data?.message || 'Ошибка авторизации.'
   }
 }
+
+
 </script>

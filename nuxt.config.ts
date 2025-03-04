@@ -1,7 +1,4 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
   nitro: {
     routeRules: {
       "/api/**": {
@@ -9,5 +6,7 @@ export default defineNuxtConfig({
       },
     }
   },
-  modules: ['@nuxtjs/tailwindcss','@pinia/nuxt']
+
+  modules: ['@nuxtjs/tailwindcss','@pinia/nuxt'],
+  compatibilityDate: '2025-02-27',
 })
